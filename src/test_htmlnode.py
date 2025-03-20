@@ -1,10 +1,10 @@
 import unittest
 
-from htmlnode import HTMLNode, LeafNode
+from htmlnode import HTMLNode, LeafNode, ParentNode
 
 
 class TestHTMLNode(unittest.TestCase):
-    def test_to_html_props(self):
+    def test_props_to_html(self):
         node = HTMLNode(
             "div",
             "Hello, world!",
@@ -50,6 +50,7 @@ class TestHTMLNode(unittest.TestCase):
             "HTMLNode(p, What a strange world, None, {'class': 'primary'})",
         )
 
+
     def test_leaf_to_html_p(self):
         node = LeafNode("p", "Hello, world!")
         self.assertEqual(node.to_html(), "<p>Hello, world!</p>")
@@ -66,7 +67,37 @@ class TestHTMLNode(unittest.TestCase):
         self.assertEqual(node.to_html(), "Hello, world!")
 
 
+    def test_parentnode_onechild(self):
+        node = ParentNode(
+            "p",
+            [LeafNode("i", "italic text")],
+        )
+        self.assertEqual(
+            node.to_html(),
+            "<p><i>italic text</i></p>"
+        )
+    
+    def test_parentnode_twochildren(self):
+        node = ParentNode(
+            "p",
+            [LeafNode("i", "italic text"), 
+             LeafNode("b", "bold text")],
+        )
+        self.assertEqual(
+            node.to_html(),
+            "<p><i>italic text</i><b>bold text</b></p>"
+        )
 
+    def test_parentnode_repr(self):
+        node = ParentNode(
+            "p",
+            [],
+            {"class": "primary"},
+        )
+        self.assertEqual(
+            node.__repr__(),
+            "ParentNode(p, [], {'class': 'primary'})",
+        )
 
 if __name__ == "__main__":
     unittest.main()
