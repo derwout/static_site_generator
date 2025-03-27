@@ -16,7 +16,7 @@ class TestTextNode(unittest.TestCase):
 
     def test_diff_2(self):
         node = TextNode("This is a text node", TextType.BOLD)
-        node2 = TextNode("This is a text node", TextType.NORMAL)
+        node2 = TextNode("This is a text node", TextType.TEXT)
         self.assertNotEqual(node, node2)
 
     def test_diff_3(self):
@@ -36,7 +36,7 @@ class TestTextNode(unittest.TestCase):
         self.assertEqual(html_node.value, "this is bold text")
 
     def test_text(self):
-        node = TextNode("This is a text node", TextType.NORMAL)
+        node = TextNode("This is a text node", TextType.TEXT)
         html_node = text_node_to_html_node(node)
         self.assertEqual(html_node.tag, None)
         self.assertEqual(html_node.value, "This is a text node")
